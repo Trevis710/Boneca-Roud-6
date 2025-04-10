@@ -26,9 +26,15 @@ class boneca{
     praTras(){
         gsap.to(this.Boneca1.rotation, {y:-3.15, duration: 1});
     }
+    praFrente(){
+        gsap.to(this.Boneca1.rotation, {y:0, duration: 1});
+    }
+
 }
 
 let Boneca1 = new boneca();
+setTimeout(() => {
+    Boneca1.praTras}, 1000);
 
 // Adicionando luz
 const light = new THREE.AmbientLight(0xffffff); // Luz ambiente
