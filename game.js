@@ -49,6 +49,11 @@ class Player{
         }
 }
 
+
+function delay(ms){
+    return new Promise (resolve => setTimeout(resolve,ms));
+}
+
 // Classe boneca
 class boneca{
 	constructor(){
@@ -57,6 +62,7 @@ class boneca{
 		gltf.scene.scale.set(0.4, 0.4, 0.4);
 		gltf.scene.position.set(0, -1, -1);
 		this.Boneca1 = gltf.scene;
+        this.start();
 })
     }
 
@@ -68,6 +74,13 @@ class boneca{
         gsap.to(this.Boneca1.rotation, {y:0, duration: 1});
     }
 
+    async start(){
+        this.praTras();
+        await delay((Math.random()*1000)+1000);
+        this.praFrente();
+        await delay((Math.random()*1000)+1000);
+        this.start();
+    }
 }
 // Declarando o player
 let Player1 = new Player();
@@ -110,11 +123,11 @@ function onWindowResize(){
 // Pressionar a tecla
 window.addEventListener('keydown', function(e) {
     if (e.code === "ArrowLeft") {
-        console.log("Anda para a direita");
+        console.log("Anda para a esquerda");
         Player1.playerInfo.velocity = 0.1; // Move para a direita
     }
     if (e.code === "ArrowRight") {
-        console.log("Anda para a esquerda");
+        console.log("Anda para a direita");
         Player1.playerInfo.velocity = -0.1; // Move para a esquerda
     }
 });
