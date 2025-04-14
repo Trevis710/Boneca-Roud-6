@@ -39,6 +39,28 @@ class boneca{
     }
 
 }
+
+const text = document.querySelector("text");
+const tmaximo = 10
+let gamestatus = "esperando"
+
+async function init() {
+    await delay(500);
+    text.innerText = "Começando em 3"
+    await delay(500);
+    text.innerText = "Começando em 2"
+    await delay(500);
+    text.innerText = "Começando em 1"
+    await delay(500)
+    text.innerText = "VAI";
+    startGame();
+}
+
+function startGame(){
+    Boneca1.start();
+}
+
+init()
 // Declarando a boneca
 let Boneca1 = new boneca();
 setTimeout(() => {
