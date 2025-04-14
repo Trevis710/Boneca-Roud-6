@@ -82,36 +82,39 @@ class boneca{
         this.start();
     }
 }
-// Declarando o player
-let Player1 = new Player();
 
 
 
-const text = document.querySelector("text");
-const tmaximo = 10
-let gamestatus = "esperando"
-
-async function init() {
-    await delay(500);
-    text.innerText = "Começando em 3"
-    await delay(500);
-    text.innerText = "Começando em 2"
-    await delay(500);
-    text.innerText = "Começando em 1"
-    await delay(500)
-    text.innerText = "VAI";
-    startGame();
-}
 
 function startGame(){
     Boneca1.start();
 }
 
 init()
+// Declarando o player
+let Player1 = new Player();
+
+
 // Declarando a boneca
 let Boneca1 = new boneca();
 setTimeout(() => {
     Boneca1.praTras}, 1000);
+
+    const text = document.querySelector("text");
+    const tmaximo = 10
+    let gamestatus = "esperando"
+    
+    async function init() {
+        await delay(500);
+        text.innerText = "Começando em 3"
+        await delay(500);
+        text.innerText = "Começando em 2"
+        await delay(500);
+        text.innerText = "Começando em 1"
+        await delay(500)
+        text.innerText = "VAI";
+        startGame();
+        }
 
 // Adicionando luz
 const light = new THREE.AmbientLight(0xffffff); // Luz ambiente
