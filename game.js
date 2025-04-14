@@ -1,4 +1,3 @@
-
 // Config a cena
 const scene = new THREE.Scene();
 
@@ -19,6 +18,42 @@ loader.load("../tree/scene.gltf", function(gltf){
     gltf.scene.scale.set(16, 16, 16);
     gltf.scene.position.set(0, -6, -12);
 });
+
+// Classe player
+class Player{
+        constructor(){
+            const geometry = new THREE.BoxGeometry(0.3, 0.3, 0.3);
+            const material = new THREE.MeshBasicMaterial({color: 0xffffff});
+            const player = new THREE.Mesh(geometry, material)
+            scene.add(player)
+            this.player = player;
+
+            player.position.x = 3;
+            player.position.y = 0;
+            player.position.z = 0;
+
+            this.playerInfo={
+                positionX: 6,
+                velocity: 0
+            }
+        }
+        anda(){
+            this.playerInfo.velocity = 0.1;
+        }
+        update(){
+            this.playerInfo.positionX -= this.playerInfo.velocity;
+            this.player.position.x = this.playerInfo.positionX;
+        }
+        para(){
+            this.playerInfo.velocity = 0;
+        }
+}
+
+
+function delay(ms){
+    return new Promise (resolve => setTimeout(resolve,ms));
+}
+
 // Classe boneca
 class boneca{
 	constructor(){
@@ -27,6 +62,7 @@ class boneca{
 		gltf.scene.scale.set(0.4, 0.4, 0.4);
 		gltf.scene.position.set(0, -1, -1);
 		this.Boneca1 = gltf.scene;
+        this.start();
 })
     }
 
@@ -38,7 +74,18 @@ class boneca{
         gsap.to(this.Boneca1.rotation, {y:0, duration: 1});
     }
 
+    async start(){
+        this.praTras();
+        await delay((Math.random()*1000)+1000);
+        this.praFrente();
+        await delay((Math.random()*1000)+1000);
+        this.start();
+    }
 }
+// Declarando o player
+let Player1 = new Player();
+
+
 
 const text = document.querySelector("text");
 const tmaximo = 10
@@ -80,12 +127,13 @@ camera.position.z = 5;
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
+    Player1.update();
 }
 
 animate();
 
 // Capturando a alteração da resolução da tela
-window.addEventListener('resize', onwindowResize, false);
+window.addEventListener('resize', onWindowResize, false);
 
 // Função para deixar responsivo
 function onWindowResize(){
@@ -93,3 +141,23 @@ function onWindowResize(){
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
+
+// Pressionar a tecla
+window.addEventListener('keydown', function(e) {
+    if (e.code === "ArrowLeft") {
+        console.log("Anda para a esquerda");
+        Player1.playerInfo.velocity = 0.1; // Move para a direita
+    }
+    if (e.code === "ArrowRight") {
+        console.log("Anda para a direita");
+        Player1.playerInfo.velocity = -0.1; // Move para a esquerda
+    }
+});
+
+// Soltar a tecla
+window.addEventListener('keyup', function(e) {
+    if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
+        console.log("Para chamado");
+        Player1.para(); // Para o movimento
+    }
+});
