@@ -161,14 +161,14 @@ function onWindowResize() {
 
 // Pressionar a tecla
 window.addEventListener('keydown', function(e) {
-    if (gamestatus !== "jogando") return
+    if (gamestatus !== "jogando") return;
     if (e.code === "ArrowLeft") {
         console.log("Anda para a esquerda");
-        Player1.playerInfo.velocity = -0.1; // Move para a esquerda
+        Player1.playerInfo.velocity = 0.1; // Move para a esquerda
     }
     if (e.code === "ArrowRight") {
         console.log("Anda para a direita");
-        Player1.playerInfo.velocity = 0.1; // Move para a direita
+        Player1.playerInfo.velocity = -0.1; // Move para a direita
     }
 });
 
