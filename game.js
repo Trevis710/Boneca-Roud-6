@@ -42,7 +42,10 @@ class Player {
     }
     update() {
         this.checa();
+        // Limite de movimento entre -6 e 6
         this.playerInfo.positionX -= this.playerInfo.velocity;
+        if (this.playerInfo.positionX < -6) this.playerInfo.positionX = -6;
+        if (this.playerInfo.positionX > 6) this.playerInfo.positionX = 6;
         this.player.position.x = this.playerInfo.positionX;
     }
     para() {
@@ -51,10 +54,12 @@ class Player {
     checa() {
         if (this.playerInfo.velocity > 0 && !tadecostas) {
             text.innerText = "Você perdeu!";
+            this.player.material.color.set(0xff0000); // Vermelho ao perder
             gamestatus = "fim";
         }
-        if (this.playerInfo.positionX < -6) {
+        if (this.playerInfo.positionX <= -6) {
             text.innerText = "Você venceu!";
+            this.player.material.color.set(0x00ff00); // Verde ao vencer
             gamestatus = "fim";
         }
     }
@@ -144,7 +149,9 @@ camera.position.z = 5;
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
-    Player1.update();
+    if (gamestatus === "jogando") {
+        Player1.update();
+    }
 }
 
 animate();
