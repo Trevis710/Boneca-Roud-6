@@ -52,11 +52,14 @@ class Player {
         this.playerInfo.velocity = 0;
     }
     checa() {
+        if (gamestatus === "fim") return; // Impede múltiplas execuções
+
         if (this.playerInfo.velocity > 0 && !tadecostas) {
             text.innerText = "Você perdeu!";
             this.player.material.color.set(0xff0000); // Vermelho ao perder
             gamestatus = "fim";
             mostrarRestart();
+            return; // Impede que o código abaixo execute após perder
         }
         if (this.playerInfo.positionX <= -6) {
             text.innerText = "Você venceu!";
@@ -65,6 +68,7 @@ class Player {
             this.player.material.color.set(0x00ff00); // Verde ao vencer
             gamestatus = "fim";
             mostrarRestart();
+            return; // Impede que o código acima execute após vencer
         }
     }
 }
