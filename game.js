@@ -56,15 +56,20 @@ class Player {
             text.innerText = "Você perdeu!";
             this.player.material.color.set(0xff0000); // Vermelho ao perder
             gamestatus = "fim";
+            mostrarRestart();
         }
         if (this.playerInfo.positionX <= -6) {
             text.innerText = "Você venceu!";
+            mensagem.innerText = "Parabéns! Você ganhou!";
+            mensagem.style.color = "lime";
             this.player.material.color.set(0x00ff00); // Verde ao vencer
             gamestatus = "fim";
+            mostrarRestart();
         }
     }
 }
 
+const mensagem = document.querySelector('.mensagem');
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -186,3 +191,15 @@ window.addEventListener('keyup', function(e) {
         Player1.para(); // Para o movimento
     }
 });
+
+const restartBtn = document.getElementById('restartButton');
+
+function mostrarRestart() {
+    restartBtn.style.display = 'block';
+}
+
+// Evento para reiniciar o jogo
+restartBtn.addEventListener('click', () => {
+    window.location.reload();
+});
+
